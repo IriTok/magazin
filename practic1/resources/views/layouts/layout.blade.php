@@ -1,9 +1,14 @@
-<link rel="stylesheet" href="{{ asset('assets/front/css/main.css') }}">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="stylesheet" href="{{ asset('assets/front/css/main.css') }}">
     <title>@yield('title', 'Laravel Shop')</title>
 </head>
 <body>
-
-@include('layouts.navbar')
+    @include('layouts.navbar')
 
 <div class="wrapper mt-5">
     <div class="container">
@@ -61,3 +66,6 @@
         </div>
     </div>
 </div>
+
+</body>
+</html>

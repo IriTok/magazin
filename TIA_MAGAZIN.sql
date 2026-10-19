@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Окт 12 2026 г., 09:35
--- Версия сервера: 5.7.39
+-- Время создания: Окт 18 2026 г., 17:31
+-- Версия сервера: 8.0.30
 -- Версия PHP: 8.1.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -28,9 +28,9 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `categories` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -51,9 +51,9 @@ INSERT INTO `categories` (`id`, `title`, `slug`, `created_at`, `updated_at`) VAL
 --
 
 CREATE TABLE `migrations` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch` int(11) NOT NULL
+  `id` int UNSIGNED NOT NULL,
+  `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -73,12 +73,12 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 --
 
 CREATE TABLE `personal_access_tokens` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tokenable_id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abilities` text COLLATE utf8mb4_unicode_ci,
+  `id` bigint UNSIGNED NOT NULL,
+  `tokenable_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tokenable_id` bigint UNSIGNED NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abilities` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `expires_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -92,20 +92,31 @@ CREATE TABLE `personal_access_tokens` (
 --
 
 CREATE TABLE `products` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `content` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `category_id` int(10) UNSIGNED NOT NULL,
-  `status_id` int(10) UNSIGNED NOT NULL,
-  `img` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `category_id` int UNSIGNED NOT NULL,
+  `status_id` int UNSIGNED NOT NULL,
+  `img` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `price` double UNSIGNED NOT NULL DEFAULT '0',
   `old_price` double UNSIGNED NOT NULL DEFAULT '0',
-  `hit` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `sale` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `hit` tinyint UNSIGNED NOT NULL DEFAULT '0',
+  `sale` tinyint UNSIGNED NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `products`
+--
+
+INSERT INTO `products` (`id`, `title`, `slug`, `content`, `category_id`, `status_id`, `img`, `price`, `old_price`, `hit`, `sale`, `created_at`, `updated_at`) VALUES
+(1, 'Fender CD-60S', 'fender-cd-60s', 'Акустическая гитара Fender CD-60S из серии Classic Design. Идеальный выбор для начинающих и опытных музыкантов. Верхняя дека из массива ели.', 1, 1, '1.jpg\r\n', 24990, 27990, 1, 1, '2026-10-18 13:08:12', '2026-10-18 13:08:12'),
+(2, 'Yamaha F310', 'yamaha-f310', 'Легендарная акустическая гитара Yamaha F310. Отличное звучание, надежность и доступная цена.', 1, 1, '2.jpg', 14500, 0, 0, 0, '2026-10-18 13:08:12', '2026-10-18 13:08:12'),
+(3, 'Fender Player Stratocaster', 'fender-player-stratocaster', 'Электрогитара Fender Player Stratocaster. Классический дизайн, современное звучание. Корпус из ольхи, гриф из клена.', 2, 1, '3.jpg', 89900, 95000, 1, 0, '2026-10-18 13:08:12', '2026-10-18 13:08:12'),
+(4, 'Ibanez GRX70QA', 'ibanez-grx70qa', 'Электрогитара Ibanez GIO. Топ из клена с эффектным рисунком, два звукоснимателя хамбакера.', 2, 1, '4.jpg', 28500, 32000, 0, 1, '2026-10-18 13:08:12', '2026-10-18 13:08:12'),
+(5, 'Струны Ernie Ball Regular Slinky', 'ernie-ball-regular-slinky', 'Комплект струн для электрогитары. Толщина: 10-46. Легендарное качество и звучание.', 3, 1, '5.jpg', 850, 0, 0, 0, '2026-10-18 13:08:12', '2026-10-18 13:08:12');
 
 -- --------------------------------------------------------
 
@@ -114,12 +125,21 @@ CREATE TABLE `products` (
 --
 
 CREATE TABLE `statuses` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `icon` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `icon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `statuses`
+--
+
+INSERT INTO `statuses` (`id`, `title`, `icon`, `created_at`, `updated_at`) VALUES
+(1, 'В наличии', 'fa-check-circle', '2026-10-18 13:11:56', '2026-10-18 13:11:56'),
+(2, 'Под заказ', 'fa-clock', '2026-10-18 13:11:56', '2026-10-18 13:11:56'),
+(3, 'Нет в наличии', 'fa-times-circle', '2026-10-18 13:11:56', '2026-10-18 13:11:56');
 
 --
 -- Индексы сохранённых таблиц
@@ -165,31 +185,31 @@ ALTER TABLE `statuses`
 -- AUTO_INCREMENT для таблицы `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT для таблицы `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT для таблицы `statuses`
 --
 ALTER TABLE `statuses`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

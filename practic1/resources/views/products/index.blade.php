@@ -29,9 +29,19 @@
                         @endif
                         {{ $product->price }} руб.
                     </div>
-                    <button type="button" class="btn btn-info btn-block card-addtocart">
-                        <i class="fas fa-cart-arrow-down"></i> Купить
-                    </button>
+                    <form action="{{route('cart.add') }}" method="post" class="additocart">
+                        @csrf
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="qty" value="1">
+                            <input type="text" name="product_id" value="{{ $product->id }}">
+                            <div>
+                                <button class="btn btn-info btn-block cart-addtocart" type="submit">
+                                    <i class="fas fa-cart-arrow-down"></i>
+                                    Купить
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                     <div class="item-status"><i class="{{ $product->status->icon }}"></i>{{ $product->status->title }}</div>
                 </div>
             </div>
