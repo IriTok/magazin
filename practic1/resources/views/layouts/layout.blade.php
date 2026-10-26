@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/main.js'])
     <link rel="stylesheet" href="{{ asset('assets/front/css/main.css') }}">
     <title>@yield('title', 'Laravel Shop')</title>
 </head>

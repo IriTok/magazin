@@ -1,9 +1,13 @@
-function showCart (cart) {
+import * as bootstrap from 'bootstrap';
+function showCart(cart) {
     $('.cart-modal .modal-body').html(cart);
-    $('#cart-modal').modal();
-    let cartQty = $('#modal-cart-qty').text() ? $('#modal-cart-qty').text() : 0;
-    $('.mini-cart-qty').text(cartQty);
+    const modalElement = document.getElementById('cart-modal');
+    const modalInstance = bootstrap.Modal.getOrCreateInstance(modalElement);
+    modalInstance.show();
 }
+
+
+window.getCart = getCart; 
 
 function getCart(action) {
     $.ajax({
@@ -36,4 +40,20 @@ $(function() {
         });
         return false;
     });
+
+    $('#cart-modal .modal-body').on('click', '.del-item', function () {
+        $.ajax({
+            url: $(this).data('action'),
+            type: 'get',
+            success: function (result) {
+                showCart(result);
+            },
+            error: function (msg) {
+                alert('Error!');
+            }
+        });
+    });
+
 });
+
+
