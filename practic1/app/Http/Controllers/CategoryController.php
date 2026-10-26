@@ -12,5 +12,5 @@ class CategoryController extends Controller
         $category = Category::query()->where('slug', $slug)->firstOrFail();
         $products = $category->products()->paginate(10);
         return view('categories.show', compact('category', 'products'));
-    } 
+    }
 }
