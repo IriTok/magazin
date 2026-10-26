@@ -7,7 +7,7 @@
         @foreach($products as $product)
             <div class="product-card">
                 <div class="offer">
-                    @if($product->Hit)
+                    @if($product->hit)
                         <div class="offer-hit">Hit</div>
                     @endif
                     @if($product->sale)
