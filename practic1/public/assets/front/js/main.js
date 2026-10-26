@@ -1,3 +1,23 @@
+function showCart (cart) {
+    $('.cart-modal .modal-body').html(cart);
+    $('#cart-modal').modal();
+    let cartQty = $('#modal-cart-qty').text() ? $('#modal-cart-qty').text() : 0;
+    $('.mini-cart-qty').text(cartQty);
+}
+
+function getCart(action) {
+    $.ajax({
+        url: action,
+        type: 'get',
+        success: function (result) {
+            showCart(result);
+        },
+        error: function () {
+            alert('Error');
+        }
+    });
+}
+
 $(function() {
     $('.addtocart').on('submit', function (){
         let form = $(this);
