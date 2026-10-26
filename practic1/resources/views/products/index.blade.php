@@ -33,7 +33,6 @@
                         @csrf
                         <div class="input-group">
                             <input type="text" class="form-control" name="qty" value="1">
-                            <input type="text" name="product_id" value="{{ $product->id }}">
                             <div>
                                 <button class="btn btn-info btn-block cart-addtocart" type="submit">
                                     <i class="fas fa-cart-arrow-down"></i>

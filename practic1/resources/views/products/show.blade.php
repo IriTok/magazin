@@ -1,43 +1,61 @@
 @extends('layouts.layout')
 
-@section('title'){{ $category->title }}@endsection
+@section('title'){{ $product->title }}@endsection
 
 @section('content')
 <div class="col-md-12">
-    <h1>Категория: {{ $category->title }}</h1>
+    <h1>{{ $product->title }}</h1>
     <hr>
 </div>
 
 <div class="row">
-    @forelse ($products as $product)
-        <div class="col-md-4 col-sm-6 mb-4">
-            <div class="card h-100">
-                <img src="{{ $product->getImage() }}" alt="{{ $product->title }}" class="card-img-top img-thumbnail">
-                <div class="card-body">
-                    <h5 class="card-title">{{ $product->title }}</h5>
-                    
-                    <p class="card-text">
-                        Цена: 
-                        @if($product->old_price)
-                            <del><small>@price_format($product->old_price) руб.</small></del>
-                        @endif
-                        <strong>@price_format($product->price) руб.</strong>
-                    </p>
-                        <a href="{{ route('products.show', ['slug' => $product->slug]) }}" class="btn btn-primary btn-block">
-                        Подробнее
-                    </a>
+    <div class="col-sm-4">
+        <img src="{{ $product->getImage() }}" alt="{{ $product->title }}" class="img-thumbnail">
+    </div>
+
+    <div class="col-sm-8">
+        <ul class="list-unstyled">
+            <li>
+                <strong>Категория:</strong> 
+                <a href="{{ route('categories.show', ['slug' => $product->category->slug]) }}">
+                    {{ $product->category->title }}
+                </a>
+            </li>
+            <li>
+                <strong>Наличие:</strong> 
+                <i class="{{ $product->status->icon }}"></i> {{ $product->status->title }}
+            </li>
+            <li>
+                <strong>Цена:</strong> 
+                <span class="card-price">
+                    @if($product->old_price)
+                        <del><small>@price_format($product->old_price) руб.</small></del>
+                    @endif
+                    <strong>@price_format($product->price) руб.</strong>
+                </span>
+            </li>
+        </ul>
+
+        <form action="{{ route('cart.add') }}" method="post" class="addtocart">
+            @csrf
+            <div class="form-row">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="qty" value="1">
+                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                        <div class="input-group-append">
+                            <button class="btn btn-info btn-block cart-addtocart" type="submit">
+                                <i class="fas fa-cart-arrow-down"></i> Купить
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </form>
+        <hr>
+        <div class="product-desc">
+            {!! $product->content !!}
         </div>
-    @empty
-        <div class="col-md-12">
-            <div class="alert alert-warning" role="alert">
-                В этой категории пока нет товаров.
-            </div>
-        </div>
-    @endforelse
-</div>
-<div class="col-md-12 mt-4">
-    {{ $products->links() }}
+    </div>
 </div>
 @endsection

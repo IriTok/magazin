@@ -1,23 +1,16 @@
 import * as bootstrap from 'bootstrap';
-function showCart(cart) {
-    $('.cart-modal .modal-body').html(cart);
-    const modalElement = document.getElementById('cart-modal');
-    const modalInstance = bootstrap.Modal.getOrCreateInstance(modalElement);
-    modalInstance.show();
 
-    if (cartQty) {
-        $('#cart-modal' .modal-footer, button.btn-cart).removeClass('d-none');
-    } else {
-        $('#cart-modal' .modal-footer, button.btn-cart).addClass('d-none')
-    }
-}
-
-function clearCart(action) {
+window.clearCart = function(action) {
     $.ajax({
         url: action,
         type: 'get',
         success: function(result) {
-            showCart(result);
+            let now_location = document.location.pathname;
+            if (now_location == '/cart/checkout') {
+                location = '/cart/checkout';
+            } else {
+                showCart(result);
+            }
         },
         error: function() {
             alert('Error');
@@ -40,6 +33,21 @@ function getCart(action) {
     });
 }
 
+function showCart(cart) {
+    $('.cart-modal .modal-body').html(cart);
+    const modalElement = document.getElementById('cart-modal');
+    const modalInstance = bootstrap.Modal.getOrCreateInstance(modalElement);
+    modalInstance.show();
+
+    let cartQty = $('#cart-qty-input').val() || $('.cart-qty').text();
+
+    if (cartQty) {
+        $('#cart-modal .modal-footer, button.btn-cart').removeClass('d-none');
+    } else {
+        $('#cart-modal .modal-footer, button.btn-cart').addClass('d-none');
+    }
+}
+
 $(function() {
     $('.addtocart').on('submit', function (){
         let form = $(this);
@@ -48,12 +56,12 @@ $(function() {
             data: form.serialize(),
             type: 'post',
             success: function (result) {
-                console.log(result);
+                showCart(result);
             },
             error: function (msg) {
                 alert('Error!');
                 console.log(msg.responseJSON);
-                form[0].reset();
+                form.reset();
             }
         });
         return false;
@@ -64,12 +72,16 @@ $(function() {
             url: $(this).data('action'),
             type: 'get',
             success: function (result) {
-                showCart(result);
+                let now_location = document.location.pathname;
+                if (now_location == '/cart/checkout') {
+                    location = '/cart/checkout';
+                } else {
+                    showCart(result);
+                }
             },
             error: function (msg) {
                 alert('Error!');
             }
         });
     });
-
 });

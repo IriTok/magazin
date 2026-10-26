@@ -5,7 +5,6 @@ use \App\Http\Controllers\ProductController;
 use \App\Http\Controllers\CartController;
 use \App\Http\Controllers\CategoryController;
 
-
 Route::get('/', [\App\Http\Controllers\ProductController::class, 'index'])->name('home');
 
 Route::get('/product/{slug}', [\App\Http\Controllers\ProductController::class, 'show'])->name('products.show');
@@ -16,3 +15,5 @@ Route::post('/cart/add', [\App\Http\Controllers\CartController::class, 'add'])->
 Route::get('/cart/del-item', [\App\Http\Controllers\CartController::class, 'delItem'])->name('cart.del_item');
 Route::get('/cart/clear', [\App\Http\Controllers\CartController::class, 'clear'])->name('cart.clear');
 Route::get('/cart/show', [\App\Http\Controllers\CartController::class, 'show'])->name('cart.show');
+
+Route::match(['get', 'post'], '/cart/checkout', [\App\Http\Controllers\CartController::class, 'checkout'])->name('cart.checkout');
