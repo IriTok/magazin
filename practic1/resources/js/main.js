@@ -39,12 +39,10 @@ function showCart(cart) {
     const modalInstance = bootstrap.Modal.getOrCreateInstance(modalElement);
     modalInstance.show();
 
-    let cartQty = $('#cart-qty-input').val() || $('.cart-qty').text();
-
-    if (cartQty) {
-        $('#cart-modal .modal-footer, button.btn-cart').removeClass('d-none');
+    if ($('.cart-modal .modal-body table').length > 0) {
+        $('#cart-modal .modal-footer .btn').removeClass('d-none'); 
     } else {
-        $('#cart-modal .modal-footer, button.btn-cart').addClass('d-none');
+        $('#cart-modal .modal-footer .btn').addClass('d-none');
     }
 }
 
@@ -61,7 +59,7 @@ $(function() {
             error: function (msg) {
                 alert('Error!');
                 console.log(msg.responseJSON);
-                form.reset();
+                form[0].reset();
             }
         });
         return false;

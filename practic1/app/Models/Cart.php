@@ -12,7 +12,7 @@ class Cart extends Model
     public function addToCart($product, $qty)
     {
         if (session()->has("cart.{$product->id}")) {
-            session(["cart.{$product->id}.qty" => session("{$product->id}.qty") + $qty]);
+            session(["cart.{$product->id}.qty" => session("cart.{$product->id}.qty") + $qty]);
         } else {
             session(["cart.{$product->id}" => [
                 'product_id' => $product->id,

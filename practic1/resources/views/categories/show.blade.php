@@ -1,7 +1,6 @@
 @extends('layouts.layout')
 
-@section('title', @parent :: {{$category->title}})
-@endsection
+@section('title', $category->title ?? 'Главная')
 @section('content')
     <div class="product-cards mb-5">
         @forelse($products as $product)
@@ -29,11 +28,11 @@
                         @endif
                         {{ $product->price }} руб.
                     </div>
-                    <form action="{{route('cart.add') }}" method="post" class="additocart">
+                    <form action="{{route('cart.add') }}" method="post" class="addtocart">
                         @csrf
+                        <input type="hidden" name="product_id" value="{{ $product->id }}"> 
                         <div class="input-group">
                             <input type="text" class="form-control" name="qty" value="1">
-                            <input type="text" name="product_id" value="{{ $product->id }}">
                             <div>
                                 <button class="btn btn-info btn-block cart-addtocart" type="submit">
                                     <i class="fas fa-cart-arrow-down"></i>
@@ -48,7 +47,6 @@
             @empty
                <p>В этйо актегории пусто...</p>
             @endforelse
-        @endforeach
     </div>
     <div class="col-md-12">
         <nav aria-label="Page navigation example">

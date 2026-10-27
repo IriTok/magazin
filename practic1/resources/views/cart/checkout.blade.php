@@ -7,27 +7,27 @@
    @if ($errors->any())
    <div class="alert alert-danger">
       <ul>
-         @foreach (@errors->all() as $error)
+         @foreach ($errors->all() as $error)
             <li>{{$error}}</li>
          @endforeach
       </ul>
    </div>
    @endif
-   @if(sessiob()->('success'))
+   @if(session('success'))
       <div class="alert alert-success">
          {{session('success')}}
       </div>
-
+   @endif
    @if(!empty(session('cart')))
       <div class="table-responsive cart-table">
          <table class="table table-hover">
             <thead>
                <tr>
-                     <th>Фото</th>
-                     <th>Наименование</th>
-                     <th>Цена</th>
-                     <th>Кол-во</th>
-                     <th><i class="fas fa-times"></i></th>
+                  <th>Фото</th>
+                  <th>Наименование</th>
+                  <th>Цена</th>
+                  <th>Кол-во</th>
+                  <th><i class="fas fa-times"></i></th>
                </tr>
             </thead>
             <tbody>
@@ -61,7 +61,6 @@
             </tbody>
         </table>
     </div>
-@endif
-
-
+   @endif
 </div>
+@endsection

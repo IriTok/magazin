@@ -29,8 +29,9 @@
                         @endif
                         {{ $product->price }} руб.
                     </div>
-                    <form action="{{route('cart.add') }}" method="post" class="additocart">
+                    <form action="{{route('cart.add') }}" method="post" class="addtocart">
                         @csrf
+                        <input type="hidden" name="product_id" value="{{ $product->id }}"> 
                         <div class="input-group">
                             <input type="text" class="form-control" name="qty" value="1">
                             <div>
